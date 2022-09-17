@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-frontend
+spec:
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: demo-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-frontend
+spec:
+  selector:
+    matchLabels:
+      app: demo-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo-frontend
+    spec:
+      containers:
+        - image: ademide/demo-frontend
+          name: demo-frontend
+          ports:
+            - containerPort: 3000
